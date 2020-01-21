@@ -1,1 +1,53 @@
-/* You can add global styles to this file, and also import other style files */
+    @import url("../node_modules/bootstrap/dist/css/bootstrap.min.css");
+    .custom-slider .ng5-slider .ng5-slider-selection {
+        background: #DF495B;
+    }
+    
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: #272727;
+        background-color: #272727;
+        margin: 10px;
+    }
+    
+    .title {
+        font-family: 'Monoton', cursive;
+        text-align: center;
+        color: #8685EF;
+        text-shadow: 3px 3px #000;
+    }
+    
+    .box {
+        border-radius: 5px;
+        padding: 20px;
+        background: #B5FFE1;
+        background: radial-gradient(circle, rgba(201, 255, 233, 1) 0%, rgba(181, 255, 225, 1) 100%);
+        border: 2px solid transparent;
+        text-align: center;
+        box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+    }
+    
+    .box--over {
+        background-color: rgba(147, 147, 147, 0.5);
+    }
+    
+    .box-clicked {
+        border-color: #272727;
+    }
+    
+    .box>p {
+        font-size: 10px;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+    
+    hr.custom-hr {
+        margin-top: 0px;
+        border: 1px solid #8685EF;
+        box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.75);
+    }
+    
+    h4.subheading {
+        color: white;
+        text-shadow: 3px 3px #000;
+    }

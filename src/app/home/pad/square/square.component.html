@@ -1,0 +1,12 @@
+<ngx-file-drop dropZoneLabel=" Drop files here " (onFileDrop)="dropped($event, map['key'])" [dropZoneClassName]="clicked ? 'box box-clicked': 'box'" (click)="onPlay()">
+    <ng-template ngx-file-drop-content-tmp>
+        <div class="square-content">
+            <h2>
+                {{ map['key'] }}
+            </h2>
+            <p class="filename">
+                {{ map['value']['name'] }}
+            </p>
+        </div>
+    </ng-template>
+</ngx-file-drop>

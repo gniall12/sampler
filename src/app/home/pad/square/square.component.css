@@ -1,0 +1,12 @@
+.square-content {
+    color: #2B2B2B;
+    max-width: 100%;
+}
+
+.filename {
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    color: rgb(49, 49, 49);
+    text-overflow: ellipsis;
+}

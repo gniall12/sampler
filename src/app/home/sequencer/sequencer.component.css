@@ -1,0 +1,83 @@
+.sequencer {
+    display: grid;
+    /* grid-template-columns: 2fr repeat(16, 1fr); */
+    grid-gap: 10px;
+    width: 100%;
+    margin: 10px 0px;
+}
+
+.seq-square {
+    width: 100%;
+    box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.75);
+    border: 1px solid transparent;
+    background-color: #31AFC0;
+}
+
+p.custom {
+    color: #B5FFE1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-shadow: 3px 3px #000;
+    margin-bottom: 0px;
+}
+
+p.sample-name {
+    font-size: 12px;
+}
+
+.play-stop-icons {
+    height: 35px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.play-stop-icons:hover {
+    filter: brightness(2);
+}
+
+.clear-btn {
+    box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.75);
+    background: transparent;
+    color: white;
+    float: right;
+    border: 1px solid grey;
+}
+
+.clear-btn:hover {
+    border-color: transparent;
+    color: white;
+}
+
+.custom-slider .ng5-slider .ng5-slider-bar {
+    background: #8685ef85;
+    height: 1px;
+}
+
+.custom-slider .ng5-slider .ng5-slider-pointer {
+    width: 8px;
+    height: 16px;
+    top: auto;
+    bottom: 0;
+    background-color: white;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.custom-slider .ng5-slider .ng5-slider-pointer:after {
+    display: none;
+}
+
+.custom-slider .ng5-slider .ng5-slider-bubble {
+    bottom: 14px;
+}
+
+.ng5-slider.animate .ng5-slider-bubble {
+    color: white;
+}
+
+.custom-select {
+    background-color: transparent;
+    color: white;
+    border-color: transparent;
+}
