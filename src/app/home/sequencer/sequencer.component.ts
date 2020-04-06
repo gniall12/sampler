@@ -62,8 +62,8 @@ export class SequencerComponent implements OnInit {
 
   public onAddSquares() {
     for (const obj of this.selected) {
-      const index = obj.substring(1,);
-      const key = obj.charAt(0,1);
+      const index = obj.substring(1);
+      const key = obj.charAt(0, 1);
       if (!this.sequence[index].has(key)) {
         this.sequence[index].add(key);
       }
@@ -72,8 +72,8 @@ export class SequencerComponent implements OnInit {
 
   public onRemoveSquares() {
     for (const obj of this.selected) {
-      const index = obj.substring(1,);
-      const key = obj.charAt(0,1);
+      const index = obj.substring(1);
+      const key = obj.charAt(0, 1);
       if (this.sequence[index].has(key)) {
         this.sequence[index].delete(key);
       }
@@ -115,7 +115,7 @@ export class SequencerComponent implements OnInit {
   }
 
   public onSelectNoteValues(noteValue: number) {
-    this.numDivisions = noteValue*2;
+    this.numDivisions = noteValue * 2;
     this.numbers = new Array(+this.numDivisions).fill(0);
     this.onClearSequence();
   }
@@ -128,7 +128,11 @@ export class SequencerComponent implements OnInit {
     const background = this.isClicked(key, index) ? '#B5FFE1' : '#31AFC0';
     const borderColor = index === this.playingIndex ? '#272727' : 'transparent';
     const opacity = this.isSelected(key, index) ? 0.5 : 1;
-    return { 'background-color': background, 'border-color': borderColor, 'opacity': opacity };
+    const brightness = index % 4 == 0 ? '125%' : '100%';
+    return {
+      'background-color': background, 'border-color': borderColor, 'opacity': opacity,
+      'filter': 'brightness(' + brightness + ')'
+    };
   }
 
 
