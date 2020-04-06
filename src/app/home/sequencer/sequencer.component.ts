@@ -19,7 +19,7 @@ export class SequencerComponent implements OnInit {
   playingIndex: number;
   bpm: number;
   selected = new Set([]);
-  noteValues: number;
+  numDivisions: number;
   mouseDown: Boolean = false;
   selecting: Boolean;
   options: Options = {
@@ -38,8 +38,9 @@ export class SequencerComponent implements OnInit {
       this.sampleMap = res;
     });
     this.bpm = 128;
-    this.noteValues = 8;
-    this.onSelectNoteValues(this.noteValues);
+    this.numDivisions = 16;
+    let initialNoteValue = 8;
+    this.onSelectNoteValues(initialNoteValue);
     this.onInitialiseSequence();
   }
 
@@ -48,7 +49,7 @@ export class SequencerComponent implements OnInit {
   }
 
   public onPlaySequence() {
-    this.sequencerService.playSequence(this.sequence, this.bpm, this.noteValues);
+    this.sequencerService.playSequence(this.sequence, this.bpm, this.numDivisions);
     this.sequencerService.playingObs.subscribe(res => {
       this.playingIndex = res;
       this.cd.detectChanges();
@@ -89,30 +90,38 @@ export class SequencerComponent implements OnInit {
 
   public onInitialiseSequence() {
     this.sequence = [
-      new Set(['W', 'A']),
-      new Set(['W']),
-      new Set(['W']),
-      new Set(['W']),
-      new Set(['W', 'S']),
-      new Set(['W']),
-      new Set(['W']),
-      new Set(['W', 'E'])
+      new Set(['D', 'A']),
+      new Set(['D']),
+      new Set(['D']),
+      new Set(['D']),
+      new Set(['D', 'S']),
+      new Set(['D']),
+      new Set(['D']),
+      new Set(['D']),
+      new Set(['D', 'A']),
+      new Set(['D']),
+      new Set(['D']),
+      new Set(['D']),
+      new Set(['D', 'S']),
+      new Set(['D']),
+      new Set(['D']),
+      new Set(['D'])
     ]
   }
 
   public onClearSequence() {
-    this.sequence = Array.from({ length: this.noteValues }, () => (new Set([])));
+    this.sequence = Array.from({ length: this.numDivisions }, () => (new Set([])));
     this.onStopSequence();
   }
 
   public onSelectNoteValues(noteValue: number) {
-    this.noteValues = noteValue;
-    this.numbers = new Array(+noteValue).fill(0);
+    this.numDivisions = noteValue*2;
+    this.numbers = new Array(+this.numDivisions).fill(0);
     this.onClearSequence();
   }
 
-  public getStyleForNumberOfNoteValues() {
-    return { 'grid-template-columns': '2fr repeat(' + this.noteValues + ', 1fr)' };
+  public getStyleForNumberOfDivisions() {
+    return { 'grid-template-columns': '2fr repeat(' + this.numDivisions + ', 1fr)' };
   }
 
   public getStyleForSequencerSquare(key: string, index: number) {
