@@ -13,9 +13,10 @@ export class SequencerService {
     private samplesService: SamplesService
   ) { }
 
-  public playSequence(sequence, bpm: number, noteValues: number) {
+  public playSequence(sequence, bpm: number, numDivisions: number) {
+    const noteValues = numDivisions/2;
     Tone.Transport.cancel();
-    const noteArray = Array.from(Array(+noteValues).keys());
+    const noteArray = Array.from(Array(+numDivisions).keys());
 
     const x = this.samplesService;
     const y = this;

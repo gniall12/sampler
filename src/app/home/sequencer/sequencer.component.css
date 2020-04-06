@@ -1,7 +1,6 @@
 .sequencer {
     display: grid;
-    /* grid-template-columns: 2fr repeat(16, 1fr); */
-    grid-gap: 10px;
+    gap: 2px;
     width: 100%;
     margin: 10px 0px;
 }

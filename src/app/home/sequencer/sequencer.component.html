@@ -12,14 +12,13 @@
             <option value=4>1/4</option>
             <option value=8 selected="selected">1/8</option>
             <option value=16>1/16</option>
-            <option value=32>1/32</option>
         </select>
     </div>
 </div>
 
 <div *ngIf="sequence" (window:mouseup)="onMouseUp()" style="display: block">
-    <div *ngFor="let sample of sampleMap | keyvalue: originalOrder" class="sequencer" [ngStyle]="getStyleForNumberOfNoteValues()">
-        <p class="custom sample-name">{{ sample.value['name'] }}</p>
+    <div *ngFor="let sample of sampleMap | keyvalue: originalOrder" class="sequencer" [ngStyle]="getStyleForNumberOfDivisions()">
+        <p class="custom sample-name">{{ sample.value['name'].split('.')[0] }}</p>
         <div *ngFor="let number of numbers; let i=index" class='seq-square' (mousedown)="onMouseDown(sample.key, i)" (mouseover)="onMouseOver(sample.key, i)" [ngStyle]="getStyleForSequencerSquare(sample.key, i)"></div>
     </div>
 </div>
