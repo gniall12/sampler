@@ -29,7 +29,7 @@ export class SquareComponent implements OnInit {
   }
 
   public onPlay() {
-    this.samplesService.play(this.map['key'], null);
+    this.samplesService.play(this.map['key']);
     this.clicked = true;
     setTimeout(() => this.clicked = false, 100);
   }

@@ -14,23 +14,24 @@ export class SequencerService {
   ) { }
 
   public playSequence(sequence, bpm: number, numDivisions: number) {
-    const noteValues = numDivisions/2;
+    const noteValues = numDivisions / 2;
     Tone.Transport.cancel();
     const noteArray = Array.from(Array(+numDivisions).keys());
 
-    const x = this.samplesService;
-    const y = this;
-    
-    new Tone.Sequence(function(time, col){
+    const sampService = this.samplesService;
+    const thisClass = this;
+
+    new Tone.Sequence(function (time, col) {
       let column = sequence[col];
-      y.playing.next(col);
-      for(let note of column){
-        x.play(note, "+0.1");
-      }
+      thisClass.playing.next(col);
+      column.forEach(function (val, i) {
+        var vel = Math.random() * 0.5 + 0.5;
+        sampService.players.get(val).start(time, 0, "2n", 0, vel);
+      });
     }, noteArray, noteValues + "n").start(0);
     Tone.Transport.bpm.value = bpm;
     Tone.Transport.start();
-   }
+  }
 
   public stopSequence() {
     Tone.Transport.stop();
