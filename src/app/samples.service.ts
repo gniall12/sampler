@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
-// import Tone from 'tone';
 
 @Injectable({
   providedIn: 'root'
@@ -17,18 +16,18 @@ export class SamplesService {
   };
   private sampleMap: BehaviorSubject<any> = new BehaviorSubject<any>(this.sampleMapValues);
   sampleMapObs: Observable<any> = this.sampleMap.asObservable();
-  
+
   players;
 
-  constructor() { 
+  constructor() {
     this.sampleMap.next(this.sampleMapValues);
     this.setPlayers()
   }
 
-  public play(key: string, advanceSchedule: string) {
+  public play(key: string) {
     key = key.toUpperCase();
     if (key in this.sampleMapValues && this.sampleMapValues[key] !== "") {
-      this.players.get(key).start(advanceSchedule);
+      this.players.get(key).start();
     }
   }
 
@@ -38,7 +37,7 @@ export class SamplesService {
     this.sampleMap.next(this.sampleMapValues);
   }
 
-  public setPlayers(){
+  public setPlayers() {
     this.players = new Tone.Players({
       "Q": this.sampleMapValues["Q"]["url"],
       "W": this.sampleMapValues["W"]["url"],
@@ -46,6 +45,9 @@ export class SamplesService {
       "A": this.sampleMapValues["A"]["url"],
       "S": this.sampleMapValues["S"]["url"],
       "D": this.sampleMapValues["D"]["url"],
+    }, {
+      "volume": -10,
+      "fadeOut": "64n",
     }).toMaster();
   }
 
