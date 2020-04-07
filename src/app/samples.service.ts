@@ -46,8 +46,7 @@ export class SamplesService {
       "S": this.sampleMapValues["S"]["url"],
       "D": this.sampleMapValues["D"]["url"],
     }, {
-      "volume": -10,
-      "fadeOut": "64n",
+      "volume": -10
     }).toMaster();
   }
 
