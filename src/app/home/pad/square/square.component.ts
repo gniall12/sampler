@@ -12,6 +12,7 @@ export class SquareComponent implements OnInit {
 
   @Input() map: Object;
   @Input() keyPlayed: Subject<any>;
+  @Input() isMobile: Boolean;
   clicked: Boolean;
 
   constructor(
