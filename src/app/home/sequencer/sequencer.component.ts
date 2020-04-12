@@ -116,9 +116,27 @@ export class SequencerComponent implements OnInit {
   }
 
   public onSelectNoteValues(noteValue: number) {
+    let originalSequence: Array<any>;
+    if (this.sequence)
+      originalSequence = this.sequence.map((x) => x);
     this.numDivisions = noteValue * 2;
-    this.numbers = new Array(+this.numDivisions).fill(0);
+    this.numbers = new Array(+this.numDivisions).fill(0); // to allow for loop in view
     this.onClearSequence();
+    // Copy original sequence if it exists
+    if (originalSequence) {
+      let differenceFactor: number;
+      if (this.sequence.length < originalSequence.length) {
+        differenceFactor = originalSequence.length / this.sequence.length;
+        for (let i = 0; i < this.sequence.length; i++) {
+          this.sequence[i] = originalSequence[i * differenceFactor];
+        }
+      } else {
+        differenceFactor = this.sequence.length / originalSequence.length;
+        for (let i = 0; i < originalSequence.length; i++) {
+          this.sequence[i * differenceFactor] = originalSequence[i];
+        }
+      }
+    }
   }
 
   public getStyleForNumberOfDivisions() {
