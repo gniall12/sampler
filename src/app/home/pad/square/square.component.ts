@@ -34,6 +34,11 @@ export class SquareComponent implements OnInit {
     setTimeout(() => this.clicked = false, 100);
   }
 
+  public onTouchEnd(event: TouchEvent | any) {
+    event.preventDefault();
+    this.onPlay();
+  }
+
   public dropped(files: NgxFileDropEntry[], key) {
     for (const droppedFile of files) {
 

@@ -14,11 +14,12 @@ export class SequencerComponent implements OnInit {
 
   sequence: Array<any>;
   keys = ['W', 'E', 'R', 'A', 'S', 'D', 'Z', 'X', 'C'];
-  numbers;
+  numbers: Array<number>;
   sampleMap;
   playingIndex: number;
   bpm: number;
   selected = new Set([]);
+  selectedKey: string;
   numDivisions: number;
   mouseDown: Boolean = false;
   selecting: Boolean;
@@ -61,9 +62,9 @@ export class SequencerComponent implements OnInit {
   }
 
   public onAddSquares() {
+    const key = this.selectedKey;
     for (const obj of this.selected) {
-      const index = obj.substring(1);
-      const key = obj.charAt(0, 1);
+      const index = obj;
       if (!this.sequence[index].has(key)) {
         this.sequence[index].add(key);
       }
@@ -71,9 +72,9 @@ export class SequencerComponent implements OnInit {
   }
 
   public onRemoveSquares() {
+    const key = this.selectedKey;
     for (const obj of this.selected) {
-      const index = obj.substring(1);
-      const key = obj.charAt(0, 1);
+      const index = obj;
       if (this.sequence[index].has(key)) {
         this.sequence[index].delete(key);
       }
@@ -85,7 +86,7 @@ export class SequencerComponent implements OnInit {
   }
 
   public isSelected(key: string, index: number): Boolean {
-    return this.selected.has(key + '' + index);
+    return this.selectedKey === key && this.selected.has(index);
   }
 
   public onInitialiseSequence() {
@@ -135,17 +136,37 @@ export class SequencerComponent implements OnInit {
     };
   }
 
-
   public onMouseDown(key: string, index: number) {
+    event.preventDefault();
     this.selecting = !this.sequence[index].has(key);
-    this.selected.add(key + '' + index);
+    this.selectedKey = key;
+    this.selected.add(index);
     this.mouseDown = true;
   }
 
-  public onMouseOver(key: string, index: number) {
+  public onTouchStart(event: TouchEvent | any, key: string, index: number) {
+    event.preventDefault();
+    this.selecting = !this.sequence[index].has(key);
+    this.selectedKey = key;
+    this.selected.add(index);
+    this.mouseDown = true;
+  }
+
+  public onMouseOver(index: number) {
     if (this.mouseDown) {
-      this.selected.add(key + '' + index);
+      this.selected.add(index);
       this.cd.detectChanges();
+    }
+  }
+
+  public onTouchMove(event: TouchEvent | any) {
+    let elt = document.elementFromPoint(
+      event.changedTouches[0].clientX,
+      event.changedTouches[0].clientY
+    );
+    if (elt !== null && elt.getAttribute('class') === 'seq-square') {
+      const index = +elt.getAttribute('index')
+      this.selected.add(index);
     }
   }
 
@@ -156,6 +177,17 @@ export class SequencerComponent implements OnInit {
       this.onRemoveSquares();
     this.mouseDown = false;
     this.selected.clear();
+    this.selectedKey = '';
+  }
+
+  public onTouchEnd() {
+    if (this.selecting)
+      this.onAddSquares();
+    else
+      this.onRemoveSquares();
+    this.mouseDown = false;
+    this.selected.clear();
+    this.selectedKey = '';
   }
 
 }
