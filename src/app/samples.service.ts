@@ -18,16 +18,18 @@ export class SamplesService {
   sampleMapObs: Observable<any> = this.sampleMap.asObservable();
 
   players;
+  private loaded = false;
 
   constructor() {
     this.sampleMap.next(this.sampleMapValues);
     this.setPlayers()
   }
 
-  public play(key: string) {
+  public play(key: string, time: number) {
     key = key.toUpperCase();
-    if (key in this.sampleMapValues && this.sampleMapValues[key] !== "") {
-      this.players.get(key).start();
+    const vel = Math.random() * 0.5 + 0.5;
+    if (this.loaded && key in this.sampleMapValues && this.sampleMapValues[key] !== "") {
+      this.players.get(key).start(time, 0, "2n", 0, vel);
     }
   }
 
@@ -46,6 +48,7 @@ export class SamplesService {
       "S": this.sampleMapValues["S"]["url"],
       "D": this.sampleMapValues["D"]["url"],
     }, {
+      "onload": () => this.loaded = true,
       "volume": -10
     }).toMaster();
   }
