@@ -26,7 +26,7 @@ export class SequencerService {
       thisClass.playing.next(col);
       column.forEach(function (val, i) {
         var vel = Math.random() * 0.5 + 0.5;
-        sampService.players.get(val).start(time, 0, "2n", 0, vel);
+        sampService.play(val, time);
       });
     }, noteArray, noteValues + "n").start(0);
     Tone.Transport.bpm.value = bpm;
