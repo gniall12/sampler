@@ -39,7 +39,7 @@ export class SequencerComponent implements OnInit {
     this.samplesService.sampleMapObs.subscribe(res => {
       this.sampleMap = res;
     });
-    this.bpm = 135;
+    this.bpm = 161;
     this.numDivisions = 16;
     let initialNoteValue = 8;
     this.onSelectNoteValues(initialNoteValue);
@@ -101,22 +101,23 @@ export class SequencerComponent implements OnInit {
 
   public onInitialiseSequence() {
     this.sequence = [
-      new Set(['D', 'A']),
-      new Set(['D']),
-      new Set(['D']),
-      new Set(['D']),
-      new Set(['D', 'S']),
-      new Set(['D']),
-      new Set(['D']),
-      new Set(['D']),
-      new Set(['D', 'A']),
-      new Set(['D']),
-      new Set(['D']),
-      new Set(['D']),
-      new Set(['D', 'S']),
-      new Set(['D']),
-      new Set(['D']),
-      new Set(['D'])
+      new Set(['Q', 'E', 'A']),
+      new Set([]),
+      new Set(['Q']),
+      new Set(['Q', 'E']),
+      new Set(['Q', 'S', 'D']),
+      new Set(['Q']),
+      new Set(['Q', 'E']),
+      new Set(['W', 'A']),
+
+      new Set(['Q', 'A']),
+      new Set(['E', 'S']),
+      new Set(['Q']),
+      new Set(['Q', 'A']),
+      new Set(['Q', 'E', 'A', 'S', 'D']),
+      new Set([]),
+      new Set(['W']),
+      new Set(['Q']),
     ]
   }
 

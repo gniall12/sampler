@@ -7,12 +7,12 @@ import { Observable, BehaviorSubject } from 'rxjs';
 export class SamplesService {
 
   private sampleMapValues = {
-    "Q": { name: "A1.mp3", url: "assets/A1.mp3" },
-    "W": { name: "D2.mp3", url: "assets/D2.mp3" },
-    "E": { name: "E2.mp3", url: "assets/E2.mp3" },
+    "Q": { name: "Hat.wav", url: "assets/Hat.wav" },
+    "W": { name: "Open Hat.wav", url: "assets/Open Hat.wav" },
+    "E": { name: "Perc.wav", url: "assets/Perc.wav" },
     "A": { name: "Kick.wav", url: "assets/Kick.wav" },
     "S": { name: "Snare.wav", url: "assets/Snare.wav" },
-    "D": { name: "Hat.wav", url: "assets/Hat.wav" }
+    "D": { name: "Clap.wav", url: "assets/Clap.wav" }
   };
   private sampleMap: BehaviorSubject<any> = new BehaviorSubject<any>(this.sampleMapValues);
   sampleMapObs: Observable<any> = this.sampleMap.asObservable();
