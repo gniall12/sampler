@@ -12,6 +12,10 @@
     background-color: #31AFC0;
 }
 
+.seq-square:hover { 
+    cursor: pointer;
+}
+
 p.custom {
     color: #B5FFE1;
     white-space: nowrap;
@@ -76,7 +80,7 @@ p.sample-name {
 }
 
 .custom-select {
-    background-color: transparent;
+    background-color: #272727;
     color: white;
     border-color: transparent;
 }
