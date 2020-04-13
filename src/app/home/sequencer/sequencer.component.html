@@ -4,7 +4,7 @@
 <div class="row">
   <div class="col-sm-8 custom-slider">
     <p class="custom">BPM</p>
-    <ng5-slider [(value)]="bpm" [options]="options"></ng5-slider>
+    <ng5-slider [(value)]="bpm" [options]="options" (valueChange)="valueChange()"></ng5-slider>
   </div>
   <div class="col-sm-4">
     <p class="custom">Note Values</p>
