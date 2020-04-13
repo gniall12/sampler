@@ -18,6 +18,7 @@ export class SequencerComponent implements OnInit {
   sampleMap;
   playingIndex: number;
   bpm: number;
+  bpmChange;
   selected = new Set([]);
   selectedKey: string;
   numDivisions: number;
@@ -38,7 +39,7 @@ export class SequencerComponent implements OnInit {
     this.samplesService.sampleMapObs.subscribe(res => {
       this.sampleMap = res;
     });
-    this.bpm = 128;
+    this.bpm = 135;
     this.numDivisions = 16;
     let initialNoteValue = 8;
     this.onSelectNoteValues(initialNoteValue);
@@ -47,6 +48,14 @@ export class SequencerComponent implements OnInit {
 
   originalOrder = (a: KeyValue<number, string>, b: KeyValue<number, string>): number => {
     return 0;
+  }
+
+  // When bpm value changes, wait before changing sequence, to prevent lags caused by intermediate bpm values
+  public valueChange() {
+    if (this.bpmChange)
+      clearTimeout(this.bpmChange);
+    const thisClass = this;
+    this.bpmChange = setTimeout(function () { thisClass.onPlaySequence(); }, 1500);
   }
 
   public onPlaySequence() {
