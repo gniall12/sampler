@@ -67,6 +67,7 @@ export class SequencerComponent implements OnInit {
   }
 
   public onStopSequence() {
+    this.playingIndex = -1;
     this.sequencerService.stopSequence();
   }
 
