@@ -12,6 +12,10 @@
     background-color: #31AFC0;
 }
 
+.seq-square:hover { 
+    cursor: pointer;
+}
+
 p.custom {
     color: #B5FFE1;
     white-space: nowrap;

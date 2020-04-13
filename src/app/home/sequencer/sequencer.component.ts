@@ -155,8 +155,8 @@ export class SequencerComponent implements OnInit {
   public getStyleForSequencerSquare(key: string, index: number) {
     const background = this.isClicked(key, index) ? '#B5FFE1' : '#31AFC0';
     const borderColor = index === this.playingIndex ? '#272727' : 'transparent';
-    const opacity = this.isSelected(key, index) ? 0.5 : 1;
-    const brightness = index % 4 == 0 ? '125%' : '100%';
+    const opacity = this.isSelected(key, index) ? 0.85 : this.isClicked(key, index) ? 1 : 0.65;
+    const brightness = (index * 2) % this.numDivisions == 0 ? '150%' : index % 4 == 0 ? '120%' : '100%';
     return {
       'background-color': background, 'border-color': borderColor, 'opacity': opacity,
       'filter': 'brightness(' + brightness + ')'
