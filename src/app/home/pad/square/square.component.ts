@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { NgxFileDropEntry, FileSystemFileEntry } from 'ngx-file-drop';
 import { SamplesService } from 'src/app/samples.service';
 import { Subject } from 'rxjs';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { VolumeModalComponent } from './volume-modal/volume-modal.component';
 
 @Component({
   selector: 'app-square',
@@ -14,9 +16,11 @@ export class SquareComponent implements OnInit {
   @Input() keyPlayed: Subject<any>;
   @Input() isMobile: Boolean;
   clicked: Boolean;
+  bsModalRef: BsModalRef;
 
   constructor(
-    private samplesService: SamplesService
+    private samplesService: SamplesService,
+    private modalService: BsModalService
   ) { }
 
   ngOnInit() {
@@ -52,6 +56,15 @@ export class SquareComponent implements OnInit {
         });
       }
     }
+  }
+
+  public onPlus() {
+    event.stopPropagation();
+    const initialState = {
+      map: this.map
+    };
+    this.bsModalRef = this.modalService.show(VolumeModalComponent, { initialState });
+    this.bsModalRef.content.closeBtnName = 'Close';
   }
 
 }

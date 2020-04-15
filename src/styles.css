@@ -18,6 +18,7 @@
     }
     
     .box {
+        position: relative;
         border-radius: 5px;
         padding: 20px;
         background: #B5FFE1;

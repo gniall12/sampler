@@ -21,6 +21,7 @@
     "@angular/router": "~8.2.4",
     "bootstrap": "^4.4.1",
     "ng5-slider": "^1.2.4",
+    "ngx-bootstrap": "^5.6.1",
     "ngx-file-drop": "^8.0.8",
     "rxjs": "~6.4.0",
     "tone": "^13.8.25",
