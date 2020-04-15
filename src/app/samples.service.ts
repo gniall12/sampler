@@ -18,7 +18,6 @@ export class SamplesService {
   sampleMapObs: Observable<any> = this.sampleMap.asObservable();
 
   players;
-  private loaded = false;
 
   constructor() {
     this.sampleMap.next(this.sampleMapValues);
@@ -28,29 +27,26 @@ export class SamplesService {
   public play(key: string, time: number) {
     key = key.toUpperCase();
     const vel = Math.random() * 0.5 + 0.5;
-    if (this.loaded && key in this.sampleMapValues && this.sampleMapValues[key] !== "") {
-      this.players.get(key).start(time, 0, "2n", 0, vel);
+    if (key in this.sampleMapValues && this.sampleMapValues[key] !== "") {
+      this.players[key].start(time, 0, "2n", 0, vel);
     }
   }
 
   public setSample(key: string, filename: string, url: string) {
     this.sampleMapValues[key] = { name: filename, url: url };
-    this.setPlayers();
+    this.players[key].load(url);
     this.sampleMap.next(this.sampleMapValues);
   }
 
   public setPlayers() {
-    this.players = new Tone.Players({
-      "Q": this.sampleMapValues["Q"]["url"],
-      "W": this.sampleMapValues["W"]["url"],
-      "E": this.sampleMapValues["E"]["url"],
-      "A": this.sampleMapValues["A"]["url"],
-      "S": this.sampleMapValues["S"]["url"],
-      "D": this.sampleMapValues["D"]["url"],
-    }, {
-      "onload": () => this.loaded = true,
-      "volume": -10
-    }).toMaster();
+    this.players = {
+      "Q": new Tone.Player(this.sampleMapValues["Q"]["url"]).toMaster(),
+      "W": new Tone.Player(this.sampleMapValues["W"]["url"]).toMaster(),
+      "E": new Tone.Player(this.sampleMapValues["E"]["url"]).toMaster(),
+      "A": new Tone.Player(this.sampleMapValues["A"]["url"]).toMaster(),
+      "S": new Tone.Player(this.sampleMapValues["S"]["url"]).toMaster(),
+      "D": new Tone.Player(this.sampleMapValues["D"]["url"]).toMaster()
+    }
   }
 
 }
