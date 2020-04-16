@@ -60,6 +60,7 @@ export class SquareComponent implements OnInit {
 
   public onPlus() {
     event.stopPropagation();
+    event.preventDefault();
     const initialState = {
       map: this.map
     };

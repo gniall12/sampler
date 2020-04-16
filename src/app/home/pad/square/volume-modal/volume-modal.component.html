@@ -5,5 +5,8 @@
   </button>
 </div>
 <div class="modal-body">
-  <p>Volume</p>
+  <div class="volume-slider">
+    <p>Volume</p>
+    <ng5-slider [(value)]="volume" [options]="options" (valueChange)="volumeChange()"></ng5-slider>
+  </div>
 </div>

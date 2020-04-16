@@ -38,6 +38,14 @@ export class SamplesService {
     this.sampleMap.next(this.sampleMapValues);
   }
 
+  public setVolume(key: string, volume: number) {
+    this.players[key].volume.value = volume;
+  }
+
+  public getVolume(key: string){
+    return this.players[key].volume.value;
+  }
+
   public setPlayers() {
     this.players = {
       "Q": new Tone.Player(this.sampleMapValues["Q"]["url"]).toMaster(),
@@ -46,6 +54,9 @@ export class SamplesService {
       "A": new Tone.Player(this.sampleMapValues["A"]["url"]).toMaster(),
       "S": new Tone.Player(this.sampleMapValues["S"]["url"]).toMaster(),
       "D": new Tone.Player(this.sampleMapValues["D"]["url"]).toMaster()
+    }
+    for(const key in this.players){
+      this.players[key].volume.value = -10;
     }
   }
 

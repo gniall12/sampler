@@ -1,0 +1,34 @@
+.modal-header, .modal-body {
+    color: #272727;
+}
+
+.volume-slider>ng5-slider {
+    margin: 0px;
+}
+
+.volume-slider .ng5-slider .ng5-slider-bar {
+    background: #8685ef85;
+    height: 1px;
+}
+
+.volume-slider .ng5-slider .ng5-slider-pointer {
+    width: 8px;
+    height: 16px;
+    top: auto;
+    bottom: 0;
+    background-color: #8685EF;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.volume-slider .ng5-slider .ng5-slider-pointer:after {
+    display: none;
+}
+
+.volume-slider .ng5-slider .ng5-slider-bubble {
+    bottom: 14px;
+}
+
+.ng5-slider.animate .ng5-slider-bubble {
+    display: none;
+}
