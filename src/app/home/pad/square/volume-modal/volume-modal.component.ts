@@ -11,18 +11,26 @@ import { SamplesService } from 'src/app/samples.service';
 })
 export class VolumeModalComponent implements OnInit {
   map: Object;
-  options: Options = {
+  volumeOptions: Options = {
     floor: -30,
     ceil: 0
   };
+  reverbOptions: Options = {
+    floor: 0,
+    ceil: 1,
+    step: 0.05
+  };
   volume: number;
+  reverb: number;
   volumeChanging;
+  reverbChanging;
 
   constructor(public bsModalRef: BsModalRef,
     private samplesService: SamplesService) { }
 
   ngOnInit() {
     this.volume = this.samplesService.getVolume(this.map['key']);
+    this.reverb = this.samplesService.getReverb(this.map['key']);
   }
 
   public volumeChange() {
@@ -31,6 +39,16 @@ export class VolumeModalComponent implements OnInit {
     const thisClass = this;
     this.volumeChanging = setTimeout(function () {
       thisClass.samplesService.setVolume(thisClass.map['key'], thisClass.volume);
+      thisClass.samplesService.play(thisClass.map['key'], null);
+    }, 500);
+  }
+
+  public reverbChange() {
+    if (this.reverbChanging)
+      clearTimeout(this.reverbChanging);
+    const thisClass = this;
+    this.reverbChanging = setTimeout(function () {
+      thisClass.samplesService.setReverb(thisClass.map['key'], thisClass.reverb);
       thisClass.samplesService.play(thisClass.map['key'], null);
     }, 500);
   }

@@ -17,7 +17,8 @@ export class SamplesService {
   private sampleMap: BehaviorSubject<any> = new BehaviorSubject<any>(this.sampleMapValues);
   sampleMapObs: Observable<any> = this.sampleMap.asObservable();
 
-  players;
+  players: Object;
+  reverbs: Object;
 
   constructor() {
     this.sampleMap.next(this.sampleMapValues);
@@ -42,21 +43,33 @@ export class SamplesService {
     this.players[key].volume.value = volume;
   }
 
-  public getVolume(key: string){
+  public getVolume(key: string) {
     return this.players[key].volume.value;
   }
 
+  public setReverb(key: string, wet: number) {
+    const reverb = this.reverbs[key];
+    reverb.wet.value = wet;
+  }
+
+  public getReverb(key: string) {
+    return this.reverbs[key].wet.value;
+  }
+
   public setPlayers() {
-    this.players = {
-      "Q": new Tone.Player(this.sampleMapValues["Q"]["url"]).toMaster(),
-      "W": new Tone.Player(this.sampleMapValues["W"]["url"]).toMaster(),
-      "E": new Tone.Player(this.sampleMapValues["E"]["url"]).toMaster(),
-      "A": new Tone.Player(this.sampleMapValues["A"]["url"]).toMaster(),
-      "S": new Tone.Player(this.sampleMapValues["S"]["url"]).toMaster(),
-      "D": new Tone.Player(this.sampleMapValues["D"]["url"]).toMaster()
-    }
-    for(const key in this.players){
-      this.players[key].volume.value = -10;
+    this.players = {};
+    this.reverbs = {};
+    for (const key in this.sampleMapValues){
+      const player = new Tone.Player(this.sampleMapValues[key]["url"]);
+      player.volume.value = -10;
+      this.players[key] = player;
+
+      const reverb = new Tone.Freeverb();
+      reverb.roomSize.value = 0.75;
+      reverb.wet.value = 0;
+      this.reverbs[key] = reverb;
+      
+      player.chain(reverb, Tone.Master)
     }
   }
 
