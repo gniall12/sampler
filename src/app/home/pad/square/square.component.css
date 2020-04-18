@@ -10,3 +10,11 @@
     color: rgb(49, 49, 49);
     text-overflow: ellipsis;
 }
+
+.plus {
+    width: 30px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    cursor: pointer;
+}

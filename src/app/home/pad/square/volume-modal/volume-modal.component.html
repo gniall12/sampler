@@ -1,0 +1,16 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">{{ map['value']['name'] }}</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="effect-slider">
+    <p>Volume</p>
+    <ng5-slider [(value)]="volume" [options]="volumeOptions" (valueChange)="volumeChange()"></ng5-slider>
+  </div>
+  <div class="effect-slider">
+    <p>Reverb</p>
+    <ng5-slider [(value)]="reverb" [options]="reverbOptions" (valueChange)="reverbChange()"></ng5-slider>
+  </div>
+</div>

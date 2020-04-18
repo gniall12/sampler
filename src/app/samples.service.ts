@@ -17,8 +17,8 @@ export class SamplesService {
   private sampleMap: BehaviorSubject<any> = new BehaviorSubject<any>(this.sampleMapValues);
   sampleMapObs: Observable<any> = this.sampleMap.asObservable();
 
-  players;
-  private loaded = false;
+  players: Object;
+  reverbs: Object;
 
   constructor() {
     this.sampleMap.next(this.sampleMapValues);
@@ -28,29 +28,49 @@ export class SamplesService {
   public play(key: string, time: number) {
     key = key.toUpperCase();
     const vel = Math.random() * 0.5 + 0.5;
-    if (this.loaded && key in this.sampleMapValues && this.sampleMapValues[key] !== "") {
-      this.players.get(key).start(time, 0, "2n", 0, vel);
+    if (key in this.sampleMapValues && this.sampleMapValues[key] !== "") {
+      this.players[key].start(time, 0, "2n", 0, vel);
     }
   }
 
   public setSample(key: string, filename: string, url: string) {
     this.sampleMapValues[key] = { name: filename, url: url };
-    this.setPlayers();
+    this.players[key].load(url);
     this.sampleMap.next(this.sampleMapValues);
   }
 
+  public setVolume(key: string, volume: number) {
+    this.players[key].volume.value = volume;
+  }
+
+  public getVolume(key: string) {
+    return this.players[key].volume.value;
+  }
+
+  public setReverb(key: string, wet: number) {
+    const reverb = this.reverbs[key];
+    reverb.wet.value = wet;
+  }
+
+  public getReverb(key: string) {
+    return this.reverbs[key].wet.value;
+  }
+
   public setPlayers() {
-    this.players = new Tone.Players({
-      "Q": this.sampleMapValues["Q"]["url"],
-      "W": this.sampleMapValues["W"]["url"],
-      "E": this.sampleMapValues["E"]["url"],
-      "A": this.sampleMapValues["A"]["url"],
-      "S": this.sampleMapValues["S"]["url"],
-      "D": this.sampleMapValues["D"]["url"],
-    }, {
-      "onload": () => this.loaded = true,
-      "volume": -10
-    }).toMaster();
+    this.players = {};
+    this.reverbs = {};
+    for (const key in this.sampleMapValues){
+      const player = new Tone.Player(this.sampleMapValues[key]["url"]);
+      player.volume.value = -10;
+      this.players[key] = player;
+
+      const reverb = new Tone.Freeverb();
+      reverb.roomSize.value = 0.75;
+      reverb.wet.value = 0;
+      this.reverbs[key] = reverb;
+      
+      player.chain(reverb, Tone.Master)
+    }
   }
 
 }

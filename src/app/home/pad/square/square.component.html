@@ -8,11 +8,13 @@
       <p class="filename">
         {{ map['value']['name'].split('.')[0] }}
       </p>
+      <span class="plus" (click)="onPlus()">+</span>
     </div>
     <div class="square-content" *ngIf="isMobile">
       <h4>
         {{ map['value']['name'].split('.')[0] }}
       </h4>
+      <span class="plus" (touchend)="onPlus()">+</span>
     </div>
   </ng-template>
 </ngx-file-drop>
