@@ -1,3 +1,7 @@
+.custom-slider .ng5-slider .ng5-slider-selection {
+  background: #DF495B;
+}
+
 body {
   font-family: 'Poppins', sans-serif;
   background: #272727;
