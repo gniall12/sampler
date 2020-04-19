@@ -29,6 +29,6 @@
     bottom: 14px;
 }
 
-.ng5-slider.animate .ng5-slider-bubble {
+.effect-slider .ng5-slider.animate .ng5-slider-bubble {
     display: none;
 }
