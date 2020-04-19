@@ -55,7 +55,10 @@ export class SequencerComponent implements OnInit {
     if (this.bpmChange)
       clearTimeout(this.bpmChange);
     const thisClass = this;
-    this.bpmChange = setTimeout(function () { thisClass.onPlaySequence(); }, 1500);
+    this.bpmChange = setTimeout(function () {
+      if (thisClass.playingIndex > -1)
+        thisClass.onPlaySequence();
+    }, 1500);
   }
 
   public onPlaySequence() {
