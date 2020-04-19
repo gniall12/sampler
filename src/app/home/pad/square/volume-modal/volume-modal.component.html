@@ -13,4 +13,8 @@
     <p>Reverb</p>
     <ng5-slider [(value)]="reverb" [options]="reverbOptions" (valueChange)="reverbChange()"></ng5-slider>
   </div>
+  <div class="effect-slider" *ngIf="!isMobile">
+    <p>Delay</p>
+    <ng5-slider [(value)]="delay" [options]="reverbOptions" (valueChange)="delayChange()"></ng5-slider>
+  </div>
 </div>
