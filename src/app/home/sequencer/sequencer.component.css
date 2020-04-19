@@ -75,8 +75,14 @@ p.sample-name {
     bottom: 14px;
 }
 
-.ng5-slider.animate .ng5-slider-bubble {
+.custom-slider .ng5-slider.animate .ng5-slider-bubble {
     color: white;
+}
+
+.custom-slider .ng5-slider-span.ng5-slider-bubble.ng5-slider-limit.ng5-slider-ceil,
+.custom-slider .ng5-slider-span.ng5-slider-bubble.ng5-slider-limit.ng5-slider-floor {
+    color: #8685EF;
+    opacity: 0.5;
 }
 
 .custom-select {
