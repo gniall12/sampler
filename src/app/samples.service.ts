@@ -48,8 +48,11 @@ export class SamplesService {
   }
 
   public setReverb(key: string, wet: number) {
+    const player = this.players[key];
     const reverb = this.reverbs[key];
     reverb.wet.value = wet;
+    player.disconnect();
+    player.chain(reverb, Tone.Master)
   }
 
   public getReverb(key: string) {
@@ -60,16 +63,14 @@ export class SamplesService {
     this.players = {};
     this.reverbs = {};
     for (const key in this.sampleMapValues){
-      const player = new Tone.Player(this.sampleMapValues[key]["url"]);
+      const player = new Tone.Player(this.sampleMapValues[key]["url"]).toMaster();
       player.volume.value = -10;
       this.players[key] = player;
 
       const reverb = new Tone.Freeverb();
       reverb.roomSize.value = 0.75;
-      reverb.wet.value = 0;
+      reverb.wet.value = 0; 
       this.reverbs[key] = reverb;
-      
-      player.chain(reverb, Tone.Master)
     }
   }
 
