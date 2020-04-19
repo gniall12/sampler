@@ -62,7 +62,8 @@ export class SquareComponent implements OnInit {
     event.stopPropagation();
     event.preventDefault();
     const initialState = {
-      map: this.map
+      map: this.map,
+      isMobile: this.isMobile
     };
     this.bsModalRef = this.modalService.show(VolumeModalComponent, { initialState });
     this.bsModalRef.content.closeBtnName = 'Close';

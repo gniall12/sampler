@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Options } from 'ng5-slider';
 import { SamplesService } from 'src/app/samples.service';
@@ -10,6 +10,8 @@ import { SamplesService } from 'src/app/samples.service';
   encapsulation: ViewEncapsulation.None
 })
 export class VolumeModalComponent implements OnInit {
+
+  isMobile: Boolean;
   map: Object;
   volumeOptions: Options = {
     floor: -30,
