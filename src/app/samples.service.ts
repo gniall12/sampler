@@ -49,12 +49,9 @@ export class SamplesService {
   }
 
   public setReverb(key: string, wet: number) {
-    const player = this.players[key];
     const reverb = this.reverbs[key];
-    const delay = this.delays[key];
     reverb.wet.value = wet;
-    player.disconnect();
-    player.chain(delay, reverb, Tone.Master)
+    this.chainEffects(key);
   }
 
   public getReverb(key: string) {
@@ -62,16 +59,29 @@ export class SamplesService {
   }
 
   public setDelay(key: string, wet: number) {
-    const player = this.players[key];
-    const reverb = this.reverbs[key];
     const delay = this.delays[key];
     delay.wet.value = wet;
-    player.disconnect();
-    player.chain(delay, reverb, Tone.Master)
+    this.chainEffects(key);
   }
 
   public getDelay(key: string) {
     return this.delays[key].wet.value;
+  }
+
+  public chainEffects(key: string) {
+    const player = this.players[key];
+    const reverb = this.reverbs[key];
+    const delay = this.delays[key];
+    player.disconnect();
+    if (reverb.wet.value === 0 && delay.wet.value === 0) {
+      player.chain(Tone.Master)
+    } else if (reverb.wet.value !== 0 && delay.wet.value === 0) {
+      player.chain(reverb, Tone.Master)
+    } else if (reverb.wet.value === 0 && delay.wet.value !== 0) {
+      player.chain(delay, Tone.Master)
+    } else {
+      player.chain(delay, reverb, Tone.Master)
+    }
   }
 
   public setPlayers() {
@@ -88,7 +98,7 @@ export class SamplesService {
       reverb.wet.value = 0;
       this.reverbs[key] = reverb;
 
-      const delay = new Tone.PingPongDelay();
+      const delay = new Tone.PingPongDelay("8n", 0.5);
       delay.wet.value = 0;
       this.delays[key] = delay;
     }
