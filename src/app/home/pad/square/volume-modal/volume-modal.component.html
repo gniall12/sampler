@@ -9,8 +9,18 @@
     <p>Volume</p>
     <ng5-slider [(value)]="volume" [options]="volumeOptions" (valueChange)="volumeChange()"></ng5-slider>
   </div>
-  <div class="effect-slider" *ngIf="!isMobile">
+  <div class="effect-slider">
     <p>Reverb</p>
     <ng5-slider [(value)]="reverb" [options]="reverbOptions" (valueChange)="reverbChange()"></ng5-slider>
   </div>
+  <div class="effect-slider">
+    <p>Delay</p>
+    <ng5-slider [(value)]="delay" [options]="reverbOptions" (valueChange)="delayChange()"></ng5-slider>
+  </div>
+  <div class="effect-slider note-length">
+    <p>Note Length</p>
+    <ng5-slider [(value)]="noteLength" [options]="noteLengthOptions" (valueChange)="noteLengthChange()"></ng5-slider>
+  </div>
+  <p class="glitch-warning" *ngIf="isMobile">The sequence sometimes glitches when too many effects are added on
+    mobile devices. If this occurs, remove some effects.</p>
 </div>

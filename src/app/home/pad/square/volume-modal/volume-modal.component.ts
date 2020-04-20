@@ -22,10 +22,26 @@ export class VolumeModalComponent implements OnInit {
     ceil: 1,
     step: 0.05
   };
+  noteLengthOptions: Options = {
+    floor: 0,
+    ceil: 5,
+    translate: (value: number) => { return this.noteLengthMappings[value]; }
+  }
   volume: number;
   reverb: number;
+  delay: number;
+  noteLength: string;
   volumeChanging;
   reverbChanging;
+  delayChanging;
+  noteLengthMappings = {
+    0: "1/32",
+    1: "1/16",
+    2: "1/8",
+    3: "1/4",
+    4: "1/2",
+    5: "1 bar"
+  }
 
   constructor(public bsModalRef: BsModalRef,
     private samplesService: SamplesService) { }
@@ -33,6 +49,8 @@ export class VolumeModalComponent implements OnInit {
   ngOnInit() {
     this.volume = this.samplesService.getVolume(this.map['key']);
     this.reverb = this.samplesService.getReverb(this.map['key']);
+    this.delay = this.samplesService.getDelay(this.map['key']);
+    this.noteLength = this.samplesService.getnoteLength(this.map['key']);
   }
 
   public volumeChange() {
@@ -53,6 +71,22 @@ export class VolumeModalComponent implements OnInit {
       thisClass.samplesService.setReverb(thisClass.map['key'], thisClass.reverb);
       thisClass.samplesService.play(thisClass.map['key'], null);
     }, 500);
+  }
+
+  public delayChange() {
+    if (this.delayChanging)
+      clearTimeout(this.delayChanging);
+    const thisClass = this;
+    this.delayChanging = setTimeout(function () {
+      thisClass.samplesService.setDelay(thisClass.map['key'], thisClass.delay);
+      thisClass.samplesService.play(thisClass.map['key'], null);
+    }, 500);
+  }
+
+  public noteLengthChange() {
+    this.samplesService.setnoteLength(this.map['key'], this.noteLength);
+    const thisClass = this;
+    setTimeout(() => { thisClass.samplesService.play(thisClass.map['key'], null); }, 200);
   }
 
 }
