@@ -32,3 +32,10 @@
 .effect-slider .ng5-slider.animate .ng5-slider-bubble {
     display: none;
 }
+
+.glitch-warning {
+    font-size: 0.8rem;
+    opacity: 0.7;
+    margin-bottom: 0px;
+    margin-top: 10px;
+}
