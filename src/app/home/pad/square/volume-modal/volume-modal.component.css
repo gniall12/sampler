@@ -35,11 +35,13 @@
 
 .effect-slider.note-length .ng5-slider {
     margin-top: 20px;
+    margin-bottom: 12px;
 }
 
 .effect-slider.note-length .ng5-slider.animate .ng5-slider-bubble {
-    opacity: 0.7;
+    color: #2727279e;
     display: block;
+    font-size: 0.9rem;
 }
 
 .effect-slider.note-length .ng5-slider-span.ng5-slider-bubble.ng5-slider-limit {
