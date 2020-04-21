@@ -7,18 +7,27 @@ import { Observable, BehaviorSubject } from 'rxjs';
 export class SamplesService {
 
   private sampleMapValues = {
-    "Q": { name: "Hat.wav", url: "assets/Hat.wav" },
-    "W": { name: "Open Hat.wav", url: "assets/Open Hat.wav" },
-    "E": { name: "Perc.wav", url: "assets/Perc.wav" },
-    "A": { name: "Kick.wav", url: "assets/Kick.wav" },
-    "S": { name: "Snare.wav", url: "assets/Snare.wav" },
-    "D": { name: "Clap.wav", url: "assets/Clap.wav" }
+    "Q": { name: "Hat.wav", url: "assets/Hat.wav", noteLength: 4 },
+    "W": { name: "Open Hat.wav", url: "assets/Open Hat.wav", noteLength: 4 },
+    "E": { name: "Perc.wav", url: "assets/Perc.wav", noteLength: 4 },
+    "A": { name: "Kick.wav", url: "assets/Kick.wav", noteLength: 4 },
+    "S": { name: "Snare.wav", url: "assets/Snare.wav", noteLength: 4 },
+    "D": { name: "Clap.wav", url: "assets/Clap.wav", noteLength: 4 }
   };
   private sampleMap: BehaviorSubject<any> = new BehaviorSubject<any>(this.sampleMapValues);
   sampleMapObs: Observable<any> = this.sampleMap.asObservable();
 
   players: Object;
   reverbs: Object;
+  delays: Object;
+  noteLengthMappings = {
+    0: "32n",
+    1: "16n",
+    2: "8n",
+    3: "4n",
+    4: "2n",
+    5: "1n"
+  }
 
   constructor() {
     this.sampleMap.next(this.sampleMapValues);
@@ -29,7 +38,9 @@ export class SamplesService {
     key = key.toUpperCase();
     const vel = Math.random() * 0.5 + 0.5;
     if (key in this.sampleMapValues && this.sampleMapValues[key] !== "") {
-      this.players[key].start(time, 0, "2n", 0, vel);
+      const noteLengthNum = this.sampleMapValues[key]["noteLength"]
+      const noteLength = this.noteLengthMappings[noteLengthNum];
+      this.players[key].start(time, 0, noteLength, 0, vel);
     }
   }
 
@@ -48,29 +59,66 @@ export class SamplesService {
   }
 
   public setReverb(key: string, wet: number) {
-    const player = this.players[key];
     const reverb = this.reverbs[key];
     reverb.wet.value = wet;
-    player.disconnect();
-    player.chain(reverb, Tone.Master)
+    this.chainEffects(key);
   }
 
   public getReverb(key: string) {
     return this.reverbs[key].wet.value;
   }
 
+  public setDelay(key: string, wet: number) {
+    const delay = this.delays[key];
+    delay.wet.value = wet;
+    this.chainEffects(key);
+  }
+
+  public getDelay(key: string) {
+    return this.delays[key].wet.value;
+  }
+
+  public chainEffects(key: string) {
+    const player = this.players[key];
+    const reverb = this.reverbs[key];
+    const delay = this.delays[key];
+    player.disconnect();
+    if (reverb.wet.value === 0 && delay.wet.value === 0) {
+      player.chain(Tone.Master)
+    } else if (reverb.wet.value !== 0 && delay.wet.value === 0) {
+      player.chain(reverb, Tone.Master)
+    } else if (reverb.wet.value === 0 && delay.wet.value !== 0) {
+      player.chain(delay, Tone.Master)
+    } else {
+      player.chain(delay, reverb, Tone.Master)
+    }
+  }
+
+  public setnoteLength(key: string, noteLength: string) {
+    this.sampleMapValues[key]["noteLength"] = noteLength;
+  }
+
+  public getnoteLength(key: string) {
+    return this.sampleMapValues[key]["noteLength"];
+  }
+
   public setPlayers() {
     this.players = {};
     this.reverbs = {};
-    for (const key in this.sampleMapValues){
+    this.delays = {};
+    for (const key in this.sampleMapValues) {
       const player = new Tone.Player(this.sampleMapValues[key]["url"]).toMaster();
       player.volume.value = -10;
       this.players[key] = player;
 
       const reverb = new Tone.Freeverb();
       reverb.roomSize.value = 0.75;
-      reverb.wet.value = 0; 
+      reverb.wet.value = 0;
       this.reverbs[key] = reverb;
+
+      const delay = new Tone.PingPongDelay("8n", 0.5);
+      delay.wet.value = 0;
+      this.delays[key] = delay;
     }
   }
 

@@ -32,3 +32,25 @@
 .effect-slider .ng5-slider.animate .ng5-slider-bubble {
     display: none;
 }
+
+.effect-slider.note-length .ng5-slider {
+    margin-top: 20px;
+    margin-bottom: 12px;
+}
+
+.effect-slider.note-length .ng5-slider.animate .ng5-slider-bubble {
+    color: #2727279e;
+    display: block;
+    font-size: 0.9rem;
+}
+
+.effect-slider.note-length .ng5-slider-span.ng5-slider-bubble.ng5-slider-limit {
+    display: none;
+}
+
+.glitch-warning {
+    font-size: 0.8rem;
+    opacity: 0.7;
+    margin-bottom: 0px;
+    margin-top: 10px;
+}
