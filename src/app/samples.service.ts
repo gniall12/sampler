@@ -26,7 +26,8 @@ export class SamplesService {
     2: "8n",
     3: "4n",
     4: "2n",
-    5: "1n"
+    5: "1n",
+    6: "2m"
   }
 
   constructor() {
@@ -45,7 +46,7 @@ export class SamplesService {
   }
 
   public setSample(key: string, filename: string, url: string) {
-    this.sampleMapValues[key] = { name: filename, url: url };
+    this.sampleMapValues[key] = { name: filename, url: url, noteLength: 4 };
     this.players[key].load(url);
     this.sampleMap.next(this.sampleMapValues);
   }

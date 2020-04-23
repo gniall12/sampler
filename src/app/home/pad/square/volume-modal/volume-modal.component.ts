@@ -24,7 +24,7 @@ export class VolumeModalComponent implements OnInit {
   };
   noteLengthOptions: Options = {
     floor: 0,
-    ceil: 5,
+    ceil: 6,
     translate: (value: number) => { return this.noteLengthMappings[value]; }
   }
   volume: number;
@@ -40,7 +40,8 @@ export class VolumeModalComponent implements OnInit {
     2: "1/8",
     3: "1/4",
     4: "1/2",
-    5: "1 bar"
+    5: "1 bar",
+    6: "2 bars",
   }
 
   constructor(public bsModalRef: BsModalRef,
