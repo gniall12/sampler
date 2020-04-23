@@ -27,7 +27,7 @@ export class SamplesService {
     3: "4n",
     4: "2n",
     5: "1n",
-    6: "0.5n"
+    6: "2m"
   }
 
   constructor() {
