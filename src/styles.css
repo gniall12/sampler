@@ -15,12 +15,21 @@ body {
 .box {
   position: relative;
   border-radius: 5px;
-  padding: 20px;
+  height: 0;
+  padding: 0px 20px;
+  padding-bottom: 100%;
   background: #B5FFE1;
   background: radial-gradient(circle, rgba(201, 255, 233, 1) 0%, rgba(181, 255, 225, 1) 100%);
   border: 2px solid transparent;
   text-align: center;
   box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+@media (min-width: 1200px) {
+  .box {
+    padding: 20px;
+    height: 200px;
+  }
 }
 
 .box--over {
@@ -46,4 +55,17 @@ hr.custom-hr {
 h4.subheading {
   color: white;
   text-shadow: 3px 3px #000;
+}
+
+.drop-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0782d0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
 }
