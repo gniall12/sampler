@@ -15,6 +15,7 @@ export class PadComponent implements OnInit {
 
   sampleMap;
   isMobile: Boolean;
+  switchSampleText: string;
 
   keyPlayed: Subject<any> = new Subject();
 
@@ -26,6 +27,7 @@ export class PadComponent implements OnInit {
     this.samplesService.sampleMapObs.subscribe(res => {
       this.sampleMap = res;
     });
+    this.switchSampleText = "Switch to synth";
     this.isMobile = false; //initiate as false
     // device detection
     if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(navigator.userAgent)
@@ -41,6 +43,14 @@ export class PadComponent implements OnInit {
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent): void {
     this.keyPlayed.next(event.key);
+  }
+
+  onSwitchDefaultSamples() {
+    this.samplesService.switchDefaultSamples();
+    if(this.samplesService.isDrumSamplesActive)
+      this.switchSampleText = "Switch to synth";
+    else
+      this.switchSampleText = "Switch to drums";
   }
 
 }
