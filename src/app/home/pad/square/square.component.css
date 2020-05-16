@@ -1,20 +1,20 @@
 .square-content {
-    color: #2B2B2B;
-    max-width: 100%;
+  color: #2b2b2b;
+  max-width: 100%;
 }
 
 .filename {
-    font-size: 11px;
-    white-space: nowrap;
-    overflow: hidden;
-    color: rgb(49, 49, 49);
-    text-overflow: ellipsis;
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  color: rgb(49, 49, 49);
+  text-overflow: ellipsis;
 }
 
 .plus {
-    width: 30px;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    cursor: pointer;
+  width: 30px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  cursor: pointer;
 }

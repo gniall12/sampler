@@ -4,28 +4,59 @@
 <div class="row">
   <div class="col-sm-8 custom-slider">
     <p class="custom">BPM</p>
-    <ng5-slider [(value)]="bpm" [options]="options" (valueChange)="valueChange()"></ng5-slider>
+    <ng5-slider
+      [(value)]="bpm"
+      [options]="options"
+      (valueChange)="valueChange()"
+    ></ng5-slider>
   </div>
   <div class="col-sm-4">
     <p class="custom">Note Values</p>
-    <select class="custom-select" (change)="onSelectNoteValues($event.target.value)">
-      <option value=4>1/4</option>
-      <option value=8 selected="selected">1/8</option>
-      <option value=16>1/16</option>
+    <select
+      class="custom-select"
+      (change)="onSelectNoteValues($event.target.value)"
+    >
+      <option value="4">1/4</option>
+      <option value="8" selected="selected">1/8</option>
+      <option value="16">1/16</option>
     </select>
   </div>
 </div>
 
-<div *ngIf="sequence" (window:mouseup)="onMouseUp()" (touchend)="onTouchEnd()" style="display: block">
-  <div *ngFor="let sample of sampleMap | keyvalue: originalOrder" class="sequencer"
-    [ngStyle]="getStyleForNumberOfDivisions()">
-    <p class="custom sample-name">{{ sample.value['name'].split('.')[0] }}</p>
-    <div *ngFor="let number of numbers; let i=index" class='seq-square' [attr.index]="i"
-      (mousedown)="onMouseDown(sample.key, i)" (touchstart)="onTouchStart($event, sample.key, i)"
-      (mouseover)="onMouseOver(i)" (touchmove)="onTouchMove($event)"
-      [ngStyle]="getStyleForSequencerSquare(sample.key, i)"></div>
+<div
+  *ngIf="sequence"
+  (window:mouseup)="onMouseUp()"
+  (touchend)="onTouchEnd()"
+  style="display: block;"
+>
+  <div
+    *ngFor="let sample of sampleMap | keyvalue: originalOrder"
+    class="sequencer"
+    [ngStyle]="getStyleForNumberOfDivisions()"
+  >
+    <p class="custom sample-name">{{ sample.value["name"].split(".")[0] }}</p>
+    <div
+      *ngFor="let number of numbers; let i = index"
+      class="seq-square"
+      [attr.index]="i"
+      (mousedown)="onMouseDown(sample.key, i)"
+      (touchstart)="onTouchStart($event, sample.key, i)"
+      (mouseover)="onMouseOver(i)"
+      (touchmove)="onTouchMove($event)"
+      [ngStyle]="getStyleForSequencerSquare(sample.key, i)"
+    ></div>
   </div>
 </div>
-<img src="assets/play.svg" alt="play" class="play-stop-icons" (click)="onPlaySequence()">
-<img src="assets/stop.svg" alt="stop" class="play-stop-icons" (click)="onStopSequence()">
+<img
+  src="assets/play.svg"
+  alt="play"
+  class="play-stop-icons"
+  (click)="onPlaySequence()"
+/>
+<img
+  src="assets/stop.svg"
+  alt="stop"
+  class="play-stop-icons"
+  (click)="onStopSequence()"
+/>
 <button class="btn clear-btn" (click)="onClearSequence()">Clear</button>

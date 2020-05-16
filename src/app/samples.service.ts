@@ -1,25 +1,36 @@
-import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { Observable, BehaviorSubject } from "rxjs";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class SamplesService {
-
-  private sampleMapValues = {
-    "Q": { name: "Hat.wav", url: "assets/Hat.wav", noteLength: 4 },
-    "W": { name: "Open Hat.wav", url: "assets/Open Hat.wav", noteLength: 4 },
-    "E": { name: "Perc.wav", url: "assets/Perc.wav", noteLength: 4 },
-    "A": { name: "Kick.wav", url: "assets/Kick.wav", noteLength: 4 },
-    "S": { name: "Snare.wav", url: "assets/Snare.wav", noteLength: 4 },
-    "D": { name: "Clap.wav", url: "assets/Clap.wav", noteLength: 4 }
+  private sampleMapValues: Object;
+  private drumSampleValues = {
+    Q: { name: "Hat.wav", url: "assets/Hat.wav", noteLength: 4 },
+    W: { name: "Open Hat.wav", url: "assets/Open Hat.wav", noteLength: 4 },
+    E: { name: "Perc.wav", url: "assets/Perc.wav", noteLength: 4 },
+    A: { name: "Kick.wav", url: "assets/Kick.wav", noteLength: 4 },
+    S: { name: "Snare.wav", url: "assets/Snare.wav", noteLength: 4 },
+    D: { name: "Clap.wav", url: "assets/Clap.wav", noteLength: 4 },
   };
-  private sampleMap: BehaviorSubject<any> = new BehaviorSubject<any>(this.sampleMapValues);
+  private casioSampleValues = {
+    Q: { name: "A1.mp3", url: "assets/Casio/A1.mp3", noteLength: 4 },
+    W: { name: "B1.mp3", url: "assets/Casio/B1.mp3", noteLength: 4 },
+    E: { name: "C2.mp3", url: "assets/Casio/C2.mp3", noteLength: 4 },
+    A: { name: "D2.mp3", url: "assets/Casio/D2.mp3", noteLength: 4 },
+    S: { name: "E2.mp3", url: "assets/Casio/E2.mp3", noteLength: 4 },
+    D: { name: "F2.mp3", url: "assets/Casio/F2.mp3", noteLength: 4 },
+  };
+  private sampleMap: BehaviorSubject<any> = new BehaviorSubject<any>(
+    this.sampleMapValues
+  );
   sampleMapObs: Observable<any> = this.sampleMap.asObservable();
 
   players: Object;
   reverbs: Object;
   delays: Object;
+  isDrumSamplesActive: Boolean;
   noteLengthMappings = {
     0: "32n",
     1: "16n",
@@ -27,22 +38,36 @@ export class SamplesService {
     3: "4n",
     4: "2n",
     5: "1n",
-    6: "2m"
-  }
+    6: "2m",
+  };
 
   constructor() {
+    this.sampleMapValues = this.drumSampleValues;
+    this.isDrumSamplesActive = true;
     this.sampleMap.next(this.sampleMapValues);
-    this.setPlayers()
+    this.setPlayers();
   }
 
   public play(key: string, time: number) {
     key = key.toUpperCase();
     const vel = Math.random() * 0.5 + 0.5;
     if (key in this.sampleMapValues && this.sampleMapValues[key] !== "") {
-      const noteLengthNum = this.sampleMapValues[key]["noteLength"]
+      const noteLengthNum = this.sampleMapValues[key]["noteLength"];
       const noteLength = this.noteLengthMappings[noteLengthNum];
       this.players[key].start(time, 0, noteLength, 0, vel);
     }
+  }
+
+  switchDefaultSamples() {
+    if (this.isDrumSamplesActive) {
+      this.sampleMapValues = this.casioSampleValues;
+      this.isDrumSamplesActive = false;
+    } else {
+      this.sampleMapValues = this.drumSampleValues;
+      this.isDrumSamplesActive = true;
+    }
+    this.sampleMap.next(this.sampleMapValues);
+    this.setPlayers();
   }
 
   public setSample(key: string, filename: string, url: string) {
@@ -85,13 +110,13 @@ export class SamplesService {
     const delay = this.delays[key];
     player.disconnect();
     if (reverb.wet.value === 0 && delay.wet.value === 0) {
-      player.chain(Tone.Master)
+      player.chain(Tone.Master);
     } else if (reverb.wet.value !== 0 && delay.wet.value === 0) {
-      player.chain(reverb, Tone.Master)
+      player.chain(reverb, Tone.Master);
     } else if (reverb.wet.value === 0 && delay.wet.value !== 0) {
-      player.chain(delay, Tone.Master)
+      player.chain(delay, Tone.Master);
     } else {
-      player.chain(delay, reverb, Tone.Master)
+      player.chain(delay, reverb, Tone.Master);
     }
   }
 
@@ -108,7 +133,9 @@ export class SamplesService {
     this.reverbs = {};
     this.delays = {};
     for (const key in this.sampleMapValues) {
-      const player = new Tone.Player(this.sampleMapValues[key]["url"]).toMaster();
+      const player = new Tone.Player(
+        this.sampleMapValues[key]["url"]
+      ).toMaster();
       player.volume.value = -10;
       this.players[key] = player;
 
@@ -122,5 +149,4 @@ export class SamplesService {
       this.delays[key] = delay;
     }
   }
-
 }
