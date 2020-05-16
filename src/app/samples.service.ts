@@ -38,8 +38,8 @@ export class SamplesService {
     3: "4n",
     4: "2n",
     5: "1n",
-    6: "2m"
-  }
+    6: "2m",
+  };
 
   constructor() {
     this.sampleMapValues = this.drumSampleValues;
@@ -52,14 +52,14 @@ export class SamplesService {
     key = key.toUpperCase();
     const vel = Math.random() * 0.5 + 0.5;
     if (key in this.sampleMapValues && this.sampleMapValues[key] !== "") {
-      const noteLengthNum = this.sampleMapValues[key]["noteLength"]
+      const noteLengthNum = this.sampleMapValues[key]["noteLength"];
       const noteLength = this.noteLengthMappings[noteLengthNum];
       this.players[key].start(time, 0, noteLength, 0, vel);
     }
   }
 
   switchDefaultSamples() {
-    if(this.isDrumSamplesActive) {
+    if (this.isDrumSamplesActive) {
       this.sampleMapValues = this.casioSampleValues;
       this.isDrumSamplesActive = false;
     } else {
@@ -110,13 +110,13 @@ export class SamplesService {
     const delay = this.delays[key];
     player.disconnect();
     if (reverb.wet.value === 0 && delay.wet.value === 0) {
-      player.chain(Tone.Master)
+      player.chain(Tone.Master);
     } else if (reverb.wet.value !== 0 && delay.wet.value === 0) {
-      player.chain(reverb, Tone.Master)
+      player.chain(reverb, Tone.Master);
     } else if (reverb.wet.value === 0 && delay.wet.value !== 0) {
-      player.chain(delay, Tone.Master)
+      player.chain(delay, Tone.Master);
     } else {
-      player.chain(delay, reverb, Tone.Master)
+      player.chain(delay, reverb, Tone.Master);
     }
   }
 
@@ -133,7 +133,9 @@ export class SamplesService {
     this.reverbs = {};
     this.delays = {};
     for (const key in this.sampleMapValues) {
-      const player = new Tone.Player(this.sampleMapValues[key]["url"]).toMaster();
+      const player = new Tone.Player(
+        this.sampleMapValues[key]["url"]
+      ).toMaster();
       player.volume.value = -10;
       this.players[key] = player;
 

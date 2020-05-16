@@ -1,19 +1,23 @@
-import { Component, OnInit, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
-import { SequencerService } from 'src/app/sequencer.service';
-import { SamplesService } from 'src/app/samples.service';
-import { KeyValue } from '@angular/common';
-import { Options } from 'ng5-slider';
+import {
+  Component,
+  OnInit,
+  ChangeDetectorRef,
+  ViewEncapsulation,
+} from "@angular/core";
+import { SequencerService } from "src/app/sequencer.service";
+import { SamplesService } from "src/app/samples.service";
+import { KeyValue } from "@angular/common";
+import { Options } from "ng5-slider";
 
 @Component({
-  selector: 'app-sequencer',
-  templateUrl: './sequencer.component.html',
-  styleUrls: ['./sequencer.component.css'],
-  encapsulation: ViewEncapsulation.None
+  selector: "app-sequencer",
+  templateUrl: "./sequencer.component.html",
+  styleUrls: ["./sequencer.component.css"],
+  encapsulation: ViewEncapsulation.None,
 })
 export class SequencerComponent implements OnInit {
-
   sequence: Array<any>;
-  keys = ['W', 'E', 'R', 'A', 'S', 'D', 'Z', 'X', 'C'];
+  keys = ["W", "E", "R", "A", "S", "D", "Z", "X", "C"];
   numbers: Array<number>;
   sampleMap;
   playingIndex: number;
@@ -26,17 +30,17 @@ export class SequencerComponent implements OnInit {
   selecting: Boolean;
   options: Options = {
     floor: 30,
-    ceil: 200
+    ceil: 200,
   };
 
   constructor(
     private sequencerService: SequencerService,
     private samplesService: SamplesService,
     private cd: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit() {
-    this.samplesService.sampleMapObs.subscribe(res => {
+    this.samplesService.sampleMapObs.subscribe((res) => {
       this.sampleMap = res;
     });
     this.bpm = 161;
@@ -46,24 +50,29 @@ export class SequencerComponent implements OnInit {
     this.onInitialiseSequence();
   }
 
-  originalOrder = (a: KeyValue<number, string>, b: KeyValue<number, string>): number => {
+  originalOrder = (
+    a: KeyValue<number, string>,
+    b: KeyValue<number, string>
+  ): number => {
     return 0;
-  }
+  };
 
   // When bpm value changes, wait before changing sequence, to prevent lags caused by intermediate bpm values
   public valueChange() {
-    if (this.bpmChange)
-      clearTimeout(this.bpmChange);
+    if (this.bpmChange) clearTimeout(this.bpmChange);
     const thisClass = this;
     this.bpmChange = setTimeout(function () {
-      if (thisClass.playingIndex > -1)
-        thisClass.onPlaySequence();
+      if (thisClass.playingIndex > -1) thisClass.onPlaySequence();
     }, 1500);
   }
 
   public onPlaySequence() {
-    this.sequencerService.playSequence(this.sequence, this.bpm, this.numDivisions);
-    this.sequencerService.playingObs.subscribe(res => {
+    this.sequencerService.playSequence(
+      this.sequence,
+      this.bpm,
+      this.numDivisions
+    );
+    this.sequencerService.playingObs.subscribe((res) => {
       this.playingIndex = res;
       this.cd.detectChanges();
     });
@@ -104,35 +113,37 @@ export class SequencerComponent implements OnInit {
 
   public onInitialiseSequence() {
     this.sequence = [
-      new Set(['Q', 'E', 'A']),
+      new Set(["Q", "E", "A"]),
       new Set([]),
-      new Set(['Q']),
-      new Set(['Q', 'E']),
-      new Set(['Q', 'S', 'D']),
-      new Set(['Q']),
-      new Set(['Q', 'E']),
-      new Set(['W', 'A']),
+      new Set(["Q"]),
+      new Set(["Q", "E"]),
+      new Set(["Q", "S", "D"]),
+      new Set(["Q"]),
+      new Set(["Q", "E"]),
+      new Set(["W", "A"]),
 
-      new Set(['Q', 'A']),
-      new Set(['E', 'S']),
-      new Set(['Q']),
-      new Set(['Q', 'A']),
-      new Set(['Q', 'E', 'A', 'S', 'D']),
+      new Set(["Q", "A"]),
+      new Set(["E", "S"]),
+      new Set(["Q"]),
+      new Set(["Q", "A"]),
+      new Set(["Q", "E", "A", "S", "D"]),
       new Set([]),
-      new Set(['W']),
-      new Set(['Q']),
-    ]
+      new Set(["W"]),
+      new Set(["Q"]),
+    ];
   }
 
   public onClearSequence() {
-    this.sequence = Array.from({ length: this.numDivisions }, () => (new Set([])));
+    this.sequence = Array.from(
+      { length: this.numDivisions },
+      () => new Set([])
+    );
     this.onStopSequence();
   }
 
   public onSelectNoteValues(noteValue: number) {
     let originalSequence: Array<any>;
-    if (this.sequence)
-      originalSequence = this.sequence.map((x) => x);
+    if (this.sequence) originalSequence = this.sequence.map((x) => x);
     this.numDivisions = noteValue * 2;
     this.numbers = new Array(+this.numDivisions).fill(0); // to allow for loop in view
     this.onClearSequence();
@@ -154,18 +165,31 @@ export class SequencerComponent implements OnInit {
   }
 
   public getStyleForNumberOfDivisions() {
-    return { 'grid-template-columns': '2fr repeat(' + this.numDivisions + ', 1fr)' };
+    return {
+      "grid-template-columns": "2fr repeat(" + this.numDivisions + ", 1fr)",
+    };
   }
 
   public getStyleForSequencerSquare(key: string, index: number) {
-    const background = this.isClicked(key, index) ? '#B5FFE1' : '#31AFC0';
-    const borderColor = index === this.playingIndex ? '#272727' : 'transparent';
-    const opacity = this.isSelected(key, index) ? 0.85 : this.isClicked(key, index) ? 1 : 0.65;
-    const brightness = this.isClicked(key, index) ? '100%' :
-      (index * 2) % this.numDivisions == 0 ? '150%' : index % 4 == 0 ? '120%' : '100%';
+    const background = this.isClicked(key, index) ? "#B5FFE1" : "#31AFC0";
+    const borderColor = index === this.playingIndex ? "#272727" : "transparent";
+    const opacity = this.isSelected(key, index)
+      ? 0.85
+      : this.isClicked(key, index)
+      ? 1
+      : 0.65;
+    const brightness = this.isClicked(key, index)
+      ? "100%"
+      : (index * 2) % this.numDivisions == 0
+      ? "150%"
+      : index % 4 == 0
+      ? "120%"
+      : "100%";
     return {
-      'background-color': background, 'border-color': borderColor, 'opacity': opacity,
-      'filter': 'brightness(' + brightness + ')'
+      "background-color": background,
+      "border-color": borderColor,
+      opacity: opacity,
+      filter: "brightness(" + brightness + ")",
     };
   }
 
@@ -201,34 +225,29 @@ export class SequencerComponent implements OnInit {
         event.changedTouches[0].clientX,
         event.changedTouches[0].clientY
       );
-      if (elt !== null && elt.getAttribute('class') === 'seq-square') {
-        const index = +elt.getAttribute('index')
+      if (elt !== null && elt.getAttribute("class") === "seq-square") {
+        const index = +elt.getAttribute("index");
         this.selected.add(index);
       }
     }
   }
 
   public onMouseUp() {
-    if (this.selecting)
-      this.onAddSquares();
-    else
-      this.onRemoveSquares();
+    if (this.selecting) this.onAddSquares();
+    else this.onRemoveSquares();
     this.mouseDown = false;
     this.selected.clear();
-    this.selectedKey = '';
+    this.selectedKey = "";
   }
 
   public onTouchEnd() {
     if (event.cancelable) {
       event.preventDefault();
-      if (this.selecting)
-        this.onAddSquares();
-      else
-        this.onRemoveSquares();
+      if (this.selecting) this.onAddSquares();
+      else this.onRemoveSquares();
       this.mouseDown = false;
       this.selected.clear();
-      this.selectedKey = '';
+      this.selectedKey = "";
     }
   }
-
 }

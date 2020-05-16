@@ -1,18 +1,24 @@
-<ngx-file-drop dropZoneLabel=" Drop files here " (onFileDrop)="dropped($event, map['key'])"
-  [dropZoneClassName]="clicked ? 'box box-clicked': 'box'" contentClassName="drop-content" (click)="onPlay()" (touchend)="onTouchEnd($event)">
+<ngx-file-drop
+  dropZoneLabel=" Drop files here "
+  (onFileDrop)="dropped($event, map['key'])"
+  [dropZoneClassName]="clicked ? 'box box-clicked' : 'box'"
+  contentClassName="drop-content"
+  (click)="onPlay()"
+  (touchend)="onTouchEnd($event)"
+>
   <ng-template ngx-file-drop-content-tmp>
     <div class="square-content" *ngIf="!isMobile">
       <h2>
-        {{ map['key'] }}
+        {{ map["key"] }}
       </h2>
       <p class="filename">
-        {{ map['value']['name'].split('.')[0] }}
+        {{ map["value"]["name"].split(".")[0] }}
       </p>
       <span class="plus" (click)="onPlus()">+</span>
     </div>
     <div class="square-content" *ngIf="isMobile">
       <h4>
-        {{ map['value']['name'].split('.')[0] }}
+        {{ map["value"]["name"].split(".")[0] }}
       </h4>
       <span class="plus" (touchend)="onPlus()">+</span>
     </div>

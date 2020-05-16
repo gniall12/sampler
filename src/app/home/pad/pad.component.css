@@ -1,18 +1,18 @@
 .wrapper {
-    display: grid;
-    grid-template-columns: repeat( auto-fit, minmax(33.33%, 1fr));
-    width: 100%;
-    margin-bottom: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(33.33%, 1fr));
+  width: 100%;
+  margin-bottom: 10px;
 }
 
 .switch-sample-btn {
-    box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.75);
-    background: transparent;
-    color: #b5ffe1ba;
-    border: 1px solid grey;
+  box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.75);
+  background: transparent;
+  color: #b5ffe1ba;
+  border: 1px solid grey;
 }
 
 .switch-sample-btn:hover {
-    color: white;
-    border-color: transparent;
+  color: white;
+  border-color: transparent;
 }

@@ -1,14 +1,32 @@
 <h4 class="subheading">Sample Pad</h4>
 <hr class="custom-hr" />
-<p style="text-shadow: 3px 3px #000; color: white;" *ngIf="!isMobile">Click or use the keyboard to play. Drag and drop a sound file to change sound.</p>
-<p style="text-shadow: 3px 3px #000; color: white;" *ngIf="isMobile">Tap to play. Dragging and dropping samples is not available on mobile.</p>
+<p style="text-shadow: 3px 3px #000; color: white;" *ngIf="!isMobile">
+  Click or use the keyboard to play. Drag and drop a sound file to change sound.
+</p>
+<p style="text-shadow: 3px 3px #000; color: white;" *ngIf="isMobile">
+  Tap to play. Dragging and dropping samples is not available on mobile.
+</p>
 <div class="wrapper">
-    <div *ngFor="let map of sampleMap | keyvalue: originalOrder" style="border: 2px solid; border-radius: 8px;" [ngStyle]="{'border-color': clicked.includes(map.key) ? '#BCBCBC' : 'transparent'}">
-        <app-square [map]="map" [keyPlayed]="keyPlayed" [isMobile]="isMobile"></app-square>
-    </div>
+  <div
+    *ngFor="let map of sampleMap | keyvalue: originalOrder"
+    style="border: 2px solid; border-radius: 8px;"
+    [ngStyle]="{
+      'border-color': clicked.includes(map.key) ? '#BCBCBC' : 'transparent'
+    }"
+  >
+    <app-square
+      [map]="map"
+      [keyPlayed]="keyPlayed"
+      [isMobile]="isMobile"
+    ></app-square>
+  </div>
 </div>
 <div class="row">
-    <div class="col-md-12" style="text-align: right;">
-        <button class="btn switch-sample-btn" (click)="onSwitchDefaultSamples()" [innerText]="switchSampleText"></button>
-    </div>
+  <div class="col-md-12" style="text-align: right;">
+    <button
+      class="btn switch-sample-btn"
+      (click)="onSwitchDefaultSamples()"
+      [innerText]="switchSampleText"
+    ></button>
+  </div>
 </div>
