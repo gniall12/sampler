@@ -70,10 +70,13 @@ export class SamplesService {
     this.setPlayers();
   }
 
-  public setSample(key: string, filename: string, url: string) {
-    this.sampleMapValues[key] = { name: filename, url: url, noteLength: 4 };
-    this.players[key].load(url);
-    this.sampleMap.next(this.sampleMapValues);
+  public setSample(key: string, filename: string, url: string): Boolean {
+    if (Tone.Buffer.supportsType(url)) {
+      this.sampleMapValues[key] = { name: filename, url: url, noteLength: 4 };
+      this.players[key].load(url);
+      this.sampleMap.next(this.sampleMapValues);
+      return true;
+    } else return false;
   }
 
   public setVolume(key: string, volume: number) {

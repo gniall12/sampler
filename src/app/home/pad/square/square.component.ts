@@ -39,14 +39,19 @@ export class SquareComponent implements OnInit {
     this.onPlay();
   }
 
-  public dropped(files: NgxFileDropEntry[], key) {
+  public dropped(files: NgxFileDropEntry[], key: string) {
     for (const droppedFile of files) {
       // Is it a file?
       if (droppedFile.fileEntry.isFile) {
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
         fileEntry.file(async (file: File) => {
           const src = URL.createObjectURL(file);
-          this.samplesService.setSample(key, file.name, src);
+          const fileSupported: Boolean = this.samplesService.setSample(
+            key,
+            file.name,
+            src
+          );
+          if (!fileSupported) alert("File type not supported.");
         });
       }
     }
