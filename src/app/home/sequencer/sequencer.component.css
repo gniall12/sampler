@@ -44,11 +44,11 @@ p.sample-name {
   background: transparent;
   color: white;
   float: right;
-  border: 1px solid grey;
+  border: 1px solid transparent;
 }
 
 .clear-btn:hover {
-  border-color: transparent;
+  border-color: grey;
   color: white;
 }
 
